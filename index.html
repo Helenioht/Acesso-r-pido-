@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Hub de Busca Rápida</title>
+    <style>
+        body { background: #121212; color: white; font-family: sans-serif; display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100vh; margin: 0; }
+        .container { width: 80%; text-align: center; }
+        input { width: 100%; padding: 15px; font-size: 20px; border-radius: 8px; border: none; margin-bottom: 20px; }
+        .buttons { display: flex; gap: 10px; justify-content: center; }
+        button { padding: 10px 20px; cursor: pointer; border: none; border-radius: 5px; background: #333; color: white; font-size: 16px; }
+        button:hover { background: #555; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>Portal de Acesso Rápido</h1>
+    <input type="text" id="query" placeholder="O que deseja buscar?" onkeydown="if(event.key==='Enter') search('google')">
+    <div class="buttons">
+        <button onclick="search('google')">Google</button>
+        <button onclick="search('duckduckgo')">DuckDuckGo</button>
+        <button onclick="search('bing')">Bing</button>
+    </div>
+</div>
+
+<script>
+    function search(engine) {
+        let q = document.getElementById('query').value;
+        let url = "";
+        if(engine === 'google') url = "https://www.google.com/search?q=" + q;
+        if(engine === 'duckduckgo') url = "https://duckduckgo.com/?q=" + q;
+        if(engine === 'bing') url = "https://www.bing.com/search?q=" + q;
+        window.location.href = url;
+    }
+</script>
+</body>
+</html>
