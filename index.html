@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lenium Navegador</title>
+    <style>
+        /* Fundo de montanha */
+        body { 
+            margin: 0; 
+            padding: 0; 
+            font-family: 'Segoe UI', sans-serif; 
+            background: url('https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?q=80&w=1920') no-repeat center center fixed; 
+            background-size: cover; 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            height: 100vh; 
+        }
+
+        /* Container estilo Tablet */
+        .container { 
+            background: rgba(255, 255, 255, 0.9); 
+            padding: 40px; 
+            border-radius: 20px; 
+            width: 90%; 
+            max-width: 700px; 
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            text-align: left;
+        }
+
+        .header { display: flex; align-items: center; gap: 15px; margin-bottom: 20px; }
+        .logo { width: 50px; height: 50px; }
+        
+        h1 { color: #333; margin: 0; font-size: 24px; }
+
+        input { 
+            width: 100%; 
+            padding: 15px; 
+            font-size: 18px; 
+            border-radius: 10px; 
+            border: 1px solid #ccc; 
+            box-sizing: border-box; 
+            margin-bottom: 20px; 
+        }
+
+        /* Botões alinhados à esquerda */
+        .buttons { display: flex; gap: 15px; justify-content: flex-start; }
+        
+        button { 
+            padding: 12px 25px; 
+            cursor: pointer; 
+            border: none; 
+            border-radius: 8px; 
+            background: #007bff; 
+            color: white; 
+            font-size: 16px; 
+            transition: 0.3s;
+        }
+        button:hover { background: #0056b3; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="header">
+        <!-- Ícones solicitados -->
+        <img src="https://i.ibb.co/fGPvnNkr/icone.png" alt="Icone" class="logo">
+        <img src="https://i.ibb.co/n8Dvmqbr/logo.png" alt="Logo Lenium" class="logo">
+        <h1>Lenium Navegador</h1>
+    </div>
+    
+    <input type="text" id="query" placeholder="O que deseja buscar?" onkeydown="if(event.key==='Enter') search('google')">
+    
+    <div class="buttons">
+        <button onclick="search('google')">Google</button>
+        <button onclick="search('duckduckgo')">DuckDuckGo</button>
+        <button onclick="search('bing')">Bing</button>
+    </div>
+</div>
+
+<script>
+    function search(engine) {
+        let q = document.getElementById('query').value;
+        let urls = {
+            'google': "https://www.google.com/search?q=",
+            'duckduckgo': "https://duckduckgo.com/?q=",
+            'bing': "https://www.bing.com/search?q="
+        };
+        if (q) window.location.href = urls[engine] + encodeURIComponent(q);
+    }
+</script>
+</body>
+</html>
