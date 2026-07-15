@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lenium Navegador</title>
+    <style>
+        body { margin: 0; padding: 0; font-family: 'Segoe UI', sans-serif; background: url('https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?q=80&w=1920') no-repeat center center fixed; background-size: cover; display: flex; align-items: center; justify-content: center; min-height: 100vh; }
+        .container { background: rgba(255, 255, 255, 0.95); padding: 30px; border-radius: 20px; width: 95%; max-width: 600px; box-shadow: 0 15px 40px rgba(0,0,0,0.4); text-align: center; }
+        .header { display: flex; align-items: center; justify-content: center; gap: 20px; margin-bottom: 25px; }
+        .logo { width: 50px; height: 50px; }
+        h1 { color: #333; margin: 0; font-size: 24px; }
+        input { width: 100%; padding: 15px; font-size: 18px; border-radius: 10px; border: 1px solid #ccc; margin-bottom: 20px; box-sizing: border-box; }
+        .buttons { display: flex; gap: 10px; justify-content: center; }
+        button { padding: 10px 20px; cursor: pointer; background: #333; color: #fff; border: none; border-radius: 5px; transition: background 0.3s; }
+        button:hover { background: #555; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="header">
+        <img src="https://i.ibb.co/fGPvnNkr/icone.png" alt="Icone" class="logo">
+        <h1>Lenium Navegador</h1>
+        <img src="https://i.ibb.co/n8Dvmqbr/logo.png" alt="Logo Lenium" class="logo">
+    </div>
+    
+    <input type="text" id="query" placeholder="O que deseja buscar?">
+    
+    <div class="buttons">
+        <button onclick="search('google')">Google</button>
+        <button onclick="search('duckduckgo')">DuckDuckGo</button>
+        <button onclick="search('bing')">Bing</button>
+    </div>
+</div>
+
+<script>
+    function search(engine) {
+        let q = document.getElementById('query').value;
+        let urls = {
+            'google': "https://www.google.com/search?q=",
+            'duckduckgo': "https://duckduckgo.com/?q=",
+            'bing': "https://www.bing.com/search?q="
+        };
+        if (q) window.location.href = urls[engine] + encodeURIComponent(q);
+    }
+</script>
+</body>
+</html>
