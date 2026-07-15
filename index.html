@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lenium Navegador 3D</title>
+    <style>
+        body { margin: 0; padding: 0; font-family: 'Segoe UI', sans-serif; background: url('https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?q=80&w=1920') no-repeat center center fixed; background-size: cover; display: flex; align-items: center; justify-content: center; min-height: 100vh; }
+        .container { background: rgba(255, 255, 255, 0.95); padding: 30px; border-radius: 20px; width: 95%; max-width: 700px; box-shadow: 0 15px 40px rgba(0,0,0,0.4); }
+        .header { display: flex; align-items: center; gap: 15px; margin-bottom: 20px; }
+        .logo { width: 50px; height: 50px; }
+        h1 { color: #333; margin: 0; font-size: 24px; }
+        input { width: 100%; padding: 15px; font-size: 18px; border-radius: 10px; border: 1px solid #ccc; margin-bottom: 20px; box-sizing: border-box; }
+        .buttons { display: flex; gap: 10px; margin-bottom: 20px; }
+        
+        /* Teclado 3D */
+        .keyboard { display: grid; grid-template-columns: repeat(10, 1fr); gap: 8px; margin-top: 20px; }
+        .key { 
+            padding: 15px 5px; background: #e0e0e0; border: none; border-radius: 6px; cursor: pointer; 
+            font-weight: bold; transition: all 0.05s;
+            box-shadow: 0 6px 0 #999; /* Profundidade 3D */
+        }
+        .key:active { transform: translateY(4px); box-shadow: 0 2px 0 #999; background: #ccc; }
+        .wide { grid-column: span 2; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="header">
+        <img src="https://i.ibb.co/fGPvnNkr/icone.png" alt="Icone" class="logo">
+        <img src="https://i.ibb.co/n8Dvmqbr/logo.png" alt="Logo Lenium" class="logo">
+        <h1>Lenium Navegador</h1>
+    </div>
+    
+    <input type="text" id="query" placeholder="O que deseja buscar?">
+    
+    <div class="buttons">
+        <button onclick="search('google')">Google</button>
+        <button onclick="search('duckduckgo')">DuckDuckGo</button>
+        <button onclick="search('bing')">Bing</button>
+    </div>
+
+    <div id="keyboard" class="keyboard"></div>
+</div>
+
+<script>
+    const input = document.getElementById('query');
+    const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+
+    function playSound() {
+        const osc = audioCtx.createOscillator();
+        const gain = audioCtx.createGain();
+        osc.connect(gain);
+        gain.connect(audioCtx.destination);
+        osc.frequency.value = 600;
+        gain.gain.setValueAtTime(0.1, audioCtx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + 0.1);
+        osc.start();
+        osc.stop(audioCtx.currentTime + 0.1);
+    }
+
+    const layout = "QWERTYUIOPASDFGHJKLZXCVBNM".split('');
+    const container = document.getElementById('keyboard');
+
+    layout.forEach(k => {
+        const btn = document.createElement('button');
+        btn.textContent = k;
+        btn.className = 'key';
+        btn.onclick = () => { playSound(); input.value += k; };
+        container.appendChild(btn);
+    });
+
+    // Teclas especiais
+    const space = document.createElement('button');
+    space.textContent = "ESPAÇO";
+    space.className = 'key wide';
+    space.onclick = () => { playSound(); input.value += " "; };
+    container.appendChild(space);
+
+    const back = document.createElement('button');
+    back.textContent = "⌫";
+    back.className = 'key';
+    back.onclick = () => { playSound(); input.value = input.value.slice(0, -1); };
+    container.appendChild(back);
+
+    function search(engine) {
+        let q = input.value;
+        let urls = {
+            'google': "https://www.google.com/search?q=",
+            'duckduckgo': "https://duckduckgo.com/?q=",
+            'bing': "https://www.bing.com/search?q="
+        };
+        if (q) window.location.href = urls[engine] + encodeURIComponent(q);
+    }
+</script>
+</body>
+</html>
